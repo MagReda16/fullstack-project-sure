@@ -25,13 +25,7 @@ SECRET_KEY = "django-insecure-m&==65=%26asu-ggwr8t&l1m3p4#ayz=stckq+g#s7ip4@t-j3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
-
-CORS_ORIGIN_ALLOW_ALL = False
-
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-]
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -58,7 +52,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'intsureview_be.middleware.CustomCorsMiddleware'
 ]
 
 ROOT_URLCONF = "intsureview_be.urls"
