@@ -1,7 +1,7 @@
 import './App.css';
 import Header from './Header/Header'
 import Footer from './Footer/Footer'
-import SubscribeForm from './Form/Form';
+import SubscribeForm from './Form/SubscribeForm';
 
 function App() {
   return (
