@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useForm, Controller } from "react-hook-form";
 import { Button, Input, Select, MenuItem, Box, Typography, Paper } from "@mui/material";
 import { formStyles } from "./FormStyles";
@@ -6,8 +7,8 @@ const SubscribeForm = () => {
 
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      firstName: '',
-      lastName: '',
+      firstname: '',
+      lastname: '',
       email: '',
       password: '',
       willReceivePromotions: true,
@@ -26,7 +27,14 @@ const SubscribeForm = () => {
     'Unsure'
   ]
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      await axios.post("http://localhost:8000/form/", data);
+      console.log(data, 'Sent successfully')
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   return (
     <Paper elevation={1} sx={formStyles.container}>
@@ -35,12 +43,12 @@ const SubscribeForm = () => {
       <Box sx={formStyles.formContent}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
-            name="firstName"
+            name="firstname"
             control={control}
             render={({ field }) => <Input {...field} placeholder="First name" sx={formStyles.input} />}
           />
           <Controller
-            name="lastName"
+            name="lastname"
             control={control}
             render={({ field }) => <Input {...field} placeholder="Last name" sx={formStyles.input} />}
           />
