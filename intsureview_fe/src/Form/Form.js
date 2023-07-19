@@ -5,7 +5,7 @@ import { formStyles } from "./FormStyles";
 
 const SubscribeForm = () => {
 
-  const { control, handleSubmit } = useForm({
+  const { register, control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       firstname: '',
       lastname: '',
@@ -32,7 +32,7 @@ const SubscribeForm = () => {
       await axios.post("http://localhost:8000/form/", data);
       console.log(data, 'Sent successfully')
     } catch (error) {
-      console.log(error)
+      console.log(error.response.status)
     }
   };
 
@@ -60,8 +60,10 @@ const SubscribeForm = () => {
           <Controller
             name="password"
             control={control}
-            render={({ field }) => <Input {...field} placeholder="Password" sx={formStyles.input} />}
+            render={({ field }) => <Input {...field} placeholder="Password" sx={formStyles.input} type='password'
+              {...register('password', { minLength: 8 })} />}
           />
+          {errors.password && <Typography>Must be at least 8 characters</Typography>}
           <Controller
             name="willReceivePromotions"
             control={control}

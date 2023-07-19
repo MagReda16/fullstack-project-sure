@@ -27,6 +27,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000',
+# ]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -52,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'intsureview_be.middleware.CustomCorsMiddleware',
 ]
 
 ROOT_URLCONF = "intsureview_be.urls"
