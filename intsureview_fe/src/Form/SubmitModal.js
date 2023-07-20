@@ -13,16 +13,17 @@ const SubmitModal = ({ isModalOpen, setIsModalOpen, modalContent }) => {
       onClose={handleClose}
     >
       <Box sx={submitModalStyles.container}>
-        {modalContent.icon}
-        <Typography variant="h3">
+        <Box sx={submitModalStyles.iconContainer}>
+          {modalContent.icon}
+        </Box>
+        <Typography variant='h2' sx={submitModalStyles.title}>
           {modalContent.title}
         </Typography>
-        <Typography>
+        <Typography variant='h5'>
           {modalContent.content}
         </Typography>
-
       </Box>
-    </Modal>
+    </Modal >
   );
 }
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios'
 import { useForm, Controller } from "react-hook-form";
-import { Button, Input, Select, MenuItem, Box, Typography, Paper } from "@mui/material";
+import axios from 'axios'
+import { Button, Input, Select, MenuItem, Box, Typography, Paper, Tooltip } from "@mui/material";
 import ErrorIcon from '@mui/icons-material/Error';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SubmitModal from './SubmitModal';
@@ -11,79 +11,99 @@ const SubscribeForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({ title: '', content: '', icon: '' });
 
-
-  const { register, control, handleSubmit, formState: { errors } } = useForm({
+  const { register, control, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: {
       firstname: '',
       lastname: '',
       email: '',
       password: '',
       willReceivePromotions: true,
-      howDidYouHear: 'Dog park'
+      howDidYouHear: 'At the dog park'
     }
   });
 
-  const howDidYouHearOptions = [
-    'Google',
-    'Facebook',
-    'Instagram',
-    'Twitter',
-    'Dog park',
-    'My dog told me',
-    'Word of mouth (human)',
-    'Unsure'
-  ]
-
-  const onSubmit = async (data) => {
+  const onSubmit = async (formData) => {
     try {
-      await axios.post("http://localhost:8000/form/", data);
+      await axios.post("http://localhost:8000/form/", formData);
       setIsModalOpen(true)
       setModalContent({
         title: 'Thanks for joining!',
         content: 'Your account has been created.',
         icon: <FavoriteBorderIcon sx={{ fontSize: '50px' }} />
       })
-      console.log(data, 'Sent successfully')
+      console.log(formData, 'Sent successfully')
+      reset();
     } catch (error) {
       if (error.response.status === 400) {
         setIsModalOpen(true)
         setModalContent({
           title: 'Uh-Oh!',
-          content: 'Looks like something went wrong. Please try again.',
+          content: 'Looks like something went wrong. Please check the info you entered and try again.',
           icon: <ErrorIcon sx={{ fontSize: '50px' }} />
         })
       }
     }
   };
 
+  const howDidYouHearOptions = [
+    'Google',
+    'Facebook',
+    'Instagram',
+    'Twitter',
+    'At the dog park',
+    'My dog told me',
+    'Word of mouth (human)',
+    'Unsure'
+  ]
+
   return (
-    <Paper elevation={1} sx={formStyles.container}>
-      <Typography sx={formStyles.title}>Don't be a stranger!</Typography>
-      <Typography sx={formStyles.subtitle}>Create an account for faster checkout next time you shop</Typography>
+    <Paper elevation={3} sx={formStyles.container}>
+      <Typography sx={formStyles.title} variant='h3'>Don't be a stranger!</Typography>
+      <Typography variant='h6'>Create an account for faster checkout next time you shop</Typography>
       <Box sx={formStyles.formContent}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="firstname"
-            control={control}
-            render={({ field }) => <Input {...field} placeholder="First name" sx={formStyles.input} />}
-          />
-          <Controller
-            name="lastname"
-            control={control}
-            render={({ field }) => <Input {...field} placeholder="Last name" sx={formStyles.input} />}
-          />
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => <Input {...field} placeholder="Email" sx={formStyles.input} type='email' />}
-          />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => <Input {...field} placeholder="Password" sx={formStyles.input} type='password'
-              {...register('password', { minLength: 8 })} />}
-          />
-          {errors.password && <Typography>Must be at least 8 characters</Typography>}
+          <Box sx={formStyles.inputContainer}>
+            <Controller
+              name="firstname"
+              control={control}
+              render={({ field }) => <Input {...field} placeholder="First name" sx={formStyles.input} />}
+            />
+            <Controller
+              name="lastname"
+              control={control}
+              render={({ field }) => <Input {...field} placeholder="Last name" sx={formStyles.input} />}
+            />
+          </Box>
+          <Box sx={formStyles.inputContainer}>
+            <Controller
+              name="email"
+              control={control}
+              render={({ field }) => <Input {...field} placeholder="Email" sx={formStyles.input} type='email' />}
+            />
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <Tooltip
+                  title={errors.password ? "Must be at least 8 characters" : ""}
+                  componentsProps={{
+                    tooltip: {
+                      sx: formStyles.errorTooltip,
+                    },
+                  }}
+                  placement='bottom-end'
+                  arrow>
+                  <Input
+                    {...field}
+                    placeholder="Password"
+                    sx={formStyles.input}
+                    type='password'
+                    {...register('password', { minLength: 8 })}
+                  />
+                </Tooltip>
+              )}
+            />
+          </Box>
           <Controller
             name="howDidYouHear"
             control={control}
