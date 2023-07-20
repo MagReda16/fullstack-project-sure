@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 from intsureview_be.apps.api import views
+from intsureview_be.apps.form.formviews import FormViewSet
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -12,6 +13,7 @@ urlpatterns = [
 router = routers.DefaultRouter()
 router.register(r"users", views.UserViewSet)
 router.register(r"groups", views.GroupViewSet)
+router.register(r"form", FormViewSet, basename="form")
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
