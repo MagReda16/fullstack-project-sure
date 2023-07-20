@@ -4,8 +4,35 @@
   width: 100%;
   height: 8%;
   background-color: #19540F;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer_info {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
+  align-items: flex-end;
 }
 
 .footer_title {
-  color: #ffffff;
+  color: #fff;
+  margin: 0;
+  padding-right: 20px;
+}
+
+.footer_social_icons,
+.footer_info_btns {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+}
+
+.footer_info_btns li,
+.footer_social_icons li {
+  color: #fff;
+  padding-right: 20px
 }

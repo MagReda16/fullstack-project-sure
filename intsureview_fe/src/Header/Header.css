@@ -40,9 +40,14 @@
   margin: 0;
   padding: 0;
   margin-right: 50px;
+  font-size: 20px;
 }
 
 .header_nav_btns li {
   margin: 30px;
   color: #ffffff;
+}
+
+.header_nav_btns li:last-of-type {
+  text-decoration: underline;
 }
