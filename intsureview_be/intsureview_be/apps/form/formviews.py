@@ -12,16 +12,18 @@ class FormSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return Form.objects.create(**validated_data)
-
+  
+    
 class FormViewSet(viewsets.ViewSet):
     def create(self, request):
-        serializer = FormSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'message': 'Form submitted successfully.'})
-        else:
-            # As far as I understand this will throw a 400 error no matter what the error is.
-            # In a production environment would have to set more specific handling for others kinds of errors
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            serializer = FormSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({'message': 'Form submitted successfully.'})
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': 'Internal server error.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
