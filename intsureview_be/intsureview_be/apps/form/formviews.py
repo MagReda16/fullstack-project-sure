@@ -12,7 +12,8 @@ class FormSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return Form.objects.create(**validated_data)
-  
+    
+# Would use some kind of hashing to store password in production
     
 class FormViewSet(viewsets.ViewSet):
     def create(self, request):
