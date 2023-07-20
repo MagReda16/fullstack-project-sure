@@ -8,10 +8,7 @@ const SubmitModal = ({ isModalOpen, setIsModalOpen, modalContent }) => {
   const handleClose = () => setIsModalOpen(false);
 
   return (
-    <Modal
-      open={isModalOpen}
-      onClose={handleClose}
-    >
+    <Modal open={isModalOpen} onClose={handleClose}>
       <Box sx={submitModalStyles.container}>
         <Box sx={submitModalStyles.iconContainer}>
           {modalContent.icon}

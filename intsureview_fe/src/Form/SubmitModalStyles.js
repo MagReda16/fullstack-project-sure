@@ -24,7 +24,7 @@ export const submitModalStyles = {
     position: 'fixed',
     top: 0,
     width: '100%',
-    height: '20%',
+    height: '25%',
     backgroundColor: '#CEDDCC',
   },
   title: {

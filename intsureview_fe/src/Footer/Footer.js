@@ -6,7 +6,7 @@ import PinterestIcon from '@mui/icons-material/Pinterest';
 import './Footer.css'
 
 const Footer = () => {
-
+  // Here and in the header I'm intentionally using html elements, instead of MUI like in the form and modal components, to demonstrate knowledge 
   return (
     <div className='footer_container'>
       <ul className='footer_social_icons'>
